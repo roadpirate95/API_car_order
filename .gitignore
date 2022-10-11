@@ -213,4 +213,4 @@ ENV/
 **/migrations/*
 
 # End of https://www.gitignore.io/api/macos,linux,django,python,pycharm
-car_order/.env
+
