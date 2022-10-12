@@ -12,7 +12,7 @@ from rest_framework.decorators import action
 
 class OrderViewSet(viewsets.ModelViewSet):
     """
-    A simple ViewSet for viewing and editing orders.
+    Операции CRUD для модели Order.
     """
     queryset = Order.objects.all()
     serializer_class = OrderModelSerializer
@@ -20,7 +20,8 @@ class OrderViewSet(viewsets.ModelViewSet):
 
 class ColorViewSet(viewsets.ModelViewSet):
     """
-    A simple ViewSet for viewing and editing accounts.
+    Операции CRUD для модели Color.
+    Также API для получения списка цветов с количестовом заказанных авто одного цвета /color_and_amount/
     """
     queryset = Color.objects.all()
     serializer_class = ColorSerializer
@@ -37,15 +38,10 @@ class ColorViewSet(viewsets.ModelViewSet):
         serializer = ColorInfoSerializer(color_orders_join, many=True)
         return Response(serializer.data)
 
-        # serializer = ColorInfoSerializer(color_orders_join, many=True)
-        #
-        # return Response(serializer.data)
-
-
 
 class CarModelViewSet(viewsets.ModelViewSet):
     """
-    A simple ViewSet for viewing and editing accounts.
+    Операции CRUD для модели CarModel.
     """
     queryset = CarModel.objects.all()
     serializer_class = CarModelSerializer
@@ -53,7 +49,8 @@ class CarModelViewSet(viewsets.ModelViewSet):
 
 class CarMakeViewSet(viewsets.ModelViewSet):
     """
-    A simple ViewSet for viewing and editing accounts.
+    Операции CRUD для модели CarMake.
+    Также API для получения списка марок с количестовом заказанных авто каждой марки /make_and_amount/
     """
     queryset = CarMake.objects.all()
     serializer_class = CarMakeSerializer
@@ -71,12 +68,13 @@ class CarMakeViewSet(viewsets.ModelViewSet):
         serializer = CarMakeInfoSerializer(make_order_join, many=True)
         return Response(serializer.data)
 
-        # serializer = CarMakeInfoSerializer(make_order_join, many=True)
-        #
-        # return Response(serializer.data)
 
-
-class OrderInfo(APIView):
+class OrderInfo(APIView, MyLimitOffsetPagination):
+    """
+    API для отображения списка заказв и сортировки по возрастанию количествa авто в заказе, используйте /order_info/,
+    по убыванию /order_info/{любая цифра}/. Для отображения списка заказа и сортировки по маркам авто используйте
+    order_info/{asc}/ или order_info/{desc}/
+    """
 
     def get(self, request, *args, **kwargs):
 
@@ -85,5 +83,6 @@ class OrderInfo(APIView):
                                                                  color_order=color_order)
 
         serializer = OrderInfoSerializer(order_data_objects, many=True)
-
         return Response(serializer.data)
+
+

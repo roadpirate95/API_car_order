@@ -17,10 +17,10 @@ router4.register(r'car_model', CarModelViewSet)
 
 urlpatterns = [
     path('api/v1/', include(router.urls)),
-    path('api/v1/', include(router2.urls)),
-    path('api/v1/', include(router3.urls)),
-    path('api/v1/', include(router4.urls)),
-    path('order_info/', OrderInfo.as_view()),
-    path('order_info/<int:sort>/', OrderInfo.as_view()),
-    path('order_info/<str:sort>/', OrderInfo.as_view()),
+    path('api/v2/', include(router2.urls)),
+    path('api/v3/', include(router3.urls)),
+    path('api/v4/', include(router4.urls)),
+    path('api/order_info/', OrderInfo.as_view()),
+    path('api/order_info/<int:sort>/', OrderInfo.as_view()),
+    path('api/order_info/<str:sort>/', OrderInfo.as_view()),
 ]

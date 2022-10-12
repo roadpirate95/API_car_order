@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import CarModel, CarMake, Order, Color
 
-# Register your models here.
 
 @admin.register(CarMake)
 class CarmakeAdmin(admin.ModelAdmin):

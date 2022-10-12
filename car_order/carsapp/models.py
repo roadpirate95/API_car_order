@@ -1,5 +1,4 @@
 import datetime
-from django.utils import timezone
 from django.db import models
 
 
@@ -34,4 +33,3 @@ class Order(models.Model):
     car_model_id = models.ForeignKey(CarModel, on_delete=models.CASCADE, related_name='order_model')
     date = models.DateField(default=datetime.date.today)
     amount = models.PositiveIntegerField()
-

@@ -56,8 +56,8 @@ class CarMakeInfoSerializer(serializers.ModelSerializer):
         fields = ['title', 'amount']
 
     def get_amount(self, obj):
-        l = []
+        list_amount = []
         for car_model in obj.car_models.all():
             for order in car_model.order_model.all():
-                l.append(order.amount)
-        return sum(l)
+                list_amount.append(order.amount)
+        return sum(list_amount)

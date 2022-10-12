@@ -7,9 +7,7 @@ schema_view = get_schema_view(
    openapi.Info(
       title="Car Order API",
       default_version='v1',
-      description="Для отображения заказа и сортировки по возрастанию количествa авто в заказе используйте /order_info/, "
-                  "по убыванию /order_info/{любая цифра}/. Для отображения заказа и сортировки по маркам авто используйте"
-                  "order_info/{asc}/ или order_info/{desc}/.",
+      description="Сервис для хранение заказов о авто. Использование 127.0.0.1:8000/api/{method_api}",
 
       terms_of_service="https://www.google.com/policies/terms/",
       contact=openapi.Contact(email="contact@snippets.local"),
@@ -21,5 +19,5 @@ schema_view = get_schema_view(
 
 
 doc_urls = [
-   path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
+   path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]

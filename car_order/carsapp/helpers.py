@@ -3,6 +3,8 @@ from rest_framework.exceptions import NotFound
 
 
 class DataOrder:
+    """Класс для хранение данных о заказе"""
+
     def __init__(self, date, amount, car_model_id__title, car_model_id__car_make_id__title):
         self.date = date
         self.amount = amount
@@ -26,11 +28,14 @@ class DataOrder:
 
 
 class SortedInfoOrder:
+    """Класс для сортировки списка заказов """
 
     def __init__(self, sort_method):
         self.sort_method = sort_method
 
     def get_sort_data_order(self):
+        """Функция проверет атрибут self.sort_method и в зависимости от него определяет тип сортировки"""
+
         if isinstance(self.sort_method, int):
             order_model_make_join, color_order = self._sorting_by_amount()
 
@@ -43,6 +48,8 @@ class SortedInfoOrder:
         return order_model_make_join, color_order
 
     def _sorting_by_amount(self):
+        """Получает данные из базы и сортирует по количеству машин в заказе"""
+
         if self.sort_method:
             order_model_make_join = Order.objects.select_related('car_model_id__car_make_id') \
                 .order_by('-amount') \
@@ -54,9 +61,11 @@ class SortedInfoOrder:
                 .values('date', 'amount', 'car_model_id__title', 'car_model_id__car_make_id__title')
             color_order = Order.objects.select_related('color_id').values('color_id__title')
 
-        return order_model_make_join,  color_order
+        return order_model_make_join, color_order
 
     def _sorting_by_make(self):
+        """Получает данные из базы и сортирует по марке машин в заказе"""
+
         if self.sort_method == 'asc':
             order_model_make_join = Order.objects.select_related('car_model_id__car_make_id') \
                 .order_by('-car_model_id__car_make_id__title') \
