@@ -30,11 +30,22 @@ class CarMakeSerializer(serializers.ModelSerializer):
 
 class OrderInfoSerializer(serializers.Serializer):
 
-    amount = serializers.IntegerField()
-    make = serializers.CharField(max_length=250)
-    model_auto = serializers.CharField(max_length=250)
-    date = serializers.DateField()
-    color = serializers.CharField(max_length=250)
+    make = serializers.SerializerMethodField()
+    model = serializers.SerializerMethodField()
+    color = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Order
+        fields = ['amount', 'date', 'make', 'model', 'color']
+
+    def get_model(self, obj):
+        return obj['car_model_id__title']
+
+    def get_color(self, obj):
+        return obj['color_id__title']
+
+    def get_make(self, obj):
+        return obj['car_model_id__car_make_id__title']
 
 
 class ColorInfoSerializer(serializers.ModelSerializer):

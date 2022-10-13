@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .pagination import MyLimitOffsetPagination
-from .helpers import DataOrder, SortedInfoOrder
+from .helpers import  SortedInfoOrder
 from .models import CarModel, CarMake, Color, Order
 from .serializers import OrderModelSerializer, ColorSerializer, CarModelSerializer, CarMakeSerializer,\
     OrderInfoSerializer, ColorInfoSerializer, CarMakeInfoSerializer
@@ -77,16 +77,12 @@ class OrderInfo(APIView, MyLimitOffsetPagination):
     """
 
     def get(self, request, *args, **kwargs):
+        order_color_model_make_join = SortedInfoOrder(kwargs.get('sort')).get_sort_data_order()
 
-        order_model_make_join, color_order = SortedInfoOrder(kwargs.get('sort')).get_sort_data_order()
-
-        order_data_objects = DataOrder.create_data_order_objects(list_orders=order_model_make_join,
-                                                                 color_order=color_order)
-
-        page = self.paginate_queryset(order_data_objects, request)
+        page = self.paginate_queryset(order_color_model_make_join, request)
         if page is not None:
             serializer = OrderInfoSerializer(page, many=True)
             return self.get_paginated_response(serializer.data)
 
-        serializer = OrderInfoSerializer(order_data_objects, many=True)
+        serializer = OrderInfoSerializer(order_color_model_make_join, many=True)
         return Response(serializer.data)
