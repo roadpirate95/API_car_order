@@ -28,7 +28,7 @@ class CarMakeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class OrderInfoSerializer(serializers.Serializer):
+class OrderInfoSerializer(serializers.ModelSerializer):
 
     make = serializers.SerializerMethodField()
     model = serializers.SerializerMethodField()
