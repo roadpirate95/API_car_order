@@ -4,6 +4,7 @@ from django.db import models
 
 
 class DataOrder(models.query.QuerySet):
+    """Класс для хранение полной информации о заказе"""
     def __init__(self, date, amount, car_model_id__title, car_model_id__car_make_id__title):
         self.date = date
         self.amount = amount
@@ -17,6 +18,7 @@ class DataOrder(models.query.QuerySet):
 
     @classmethod
     def create_data_order_objects(cls, list_orders, color_order):
+        """Создает и возвращает список экземпляров данного класса"""
         order_data_objects = [cls(**list_order) for list_order in list_orders]
         _ = [
             order_data_objects[num].set_color(d['color_id__title']) for num, d in enumerate(color_order)
