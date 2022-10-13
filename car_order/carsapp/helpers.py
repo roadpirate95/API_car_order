@@ -1,16 +1,16 @@
 from .models import Order
 from rest_framework.exceptions import NotFound
+from django.db import models
 
 
-class DataOrder:
-    """Класс для хранение данных о заказе"""
-
+class DataOrder(models.query.QuerySet):
     def __init__(self, date, amount, car_model_id__title, car_model_id__car_make_id__title):
         self.date = date
         self.amount = amount
-        self.model = car_model_id__title
+        self.model_auto = car_model_id__title
         self.make = car_model_id__car_make_id__title
         self.color = None
+        super(DataOrder, self).__init__()
 
     def set_color(self, color):
         self.color = color
@@ -18,7 +18,7 @@ class DataOrder:
     @classmethod
     def create_data_order_objects(cls, list_orders, color_order):
         order_data_objects = [cls(**list_order) for list_order in list_orders]
-        change_order_data_object = [
+        _ = [
             order_data_objects[num].set_color(d['color_id__title']) for num, d in enumerate(color_order)
         ]
         return order_data_objects

@@ -70,17 +70,18 @@ class CarMakeViewSet(viewsets.ModelViewSet):
 
 
 class OrderInfo(APIView, MyLimitOffsetPagination):
-    """
-    API для отображения списка заказв и сортировки по возрастанию количествa авто в заказе, используйте /order_info/,
-    по убыванию /order_info/{любая цифра}/. Для отображения списка заказа и сортировки по маркам авто используйте
-    order_info/{asc}/ или order_info/{desc}/
-    """
 
     def get(self, request, *args, **kwargs):
 
         order_model_make_join, color_order = SortedInfoOrder(kwargs.get('sort')).get_sort_data_order()
+
         order_data_objects = DataOrder.create_data_order_objects(list_orders=order_model_make_join,
                                                                  color_order=color_order)
+
+        page = self.paginate_queryset(order_data_objects, request)
+        if page is not None:
+            serializer = OrderInfoSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
 
         serializer = OrderInfoSerializer(order_data_objects, many=True)
         return Response(serializer.data)

@@ -32,7 +32,7 @@ class OrderInfoSerializer(serializers.Serializer):
 
     amount = serializers.IntegerField()
     make = serializers.CharField(max_length=250)
-    model = serializers.CharField(max_length=250)
+    model_auto = serializers.CharField(max_length=250)
     date = serializers.DateField()
     color = serializers.CharField(max_length=250)
 
