@@ -1,5 +1,6 @@
 Для использования проекта:
-1)git clone https://github.com/roadpirate95/API_car_order.git
-2)переходим в папку car_order
-3)в командной строке docker-compose up -d --build
-4)в браузере переходим по адресу localhost:8000/docs
+1)Запустите Docker (скачать https://docs.docker.com/get-docker/)
+2)git clone https://github.com/roadpirate95/API_car_order.git
+3)переходим в папку car_order
+4)в командной строке docker-compose up -d --build
+5)в браузере переходим по адресу localhost:8000/docs
