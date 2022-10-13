@@ -41,7 +41,7 @@ class SortedInfoOrder:
             order_model_make_join = Order.objects.select_related('color_id'). \
                 select_related('car_model_id'). \
                 select_related('car_model_id__car_make_id'). \
-                order_by('-car_model_id__car_make_id__title'). \
+                order_by('car_model_id__car_make_id__title'). \
                 values('date', 'amount', 'color_id__title', 'car_model_id__title', 'car_model_id__car_make_id__title')
         elif self.sort_method == 'desc':
             order_model_make_join = Order.objects.select_related('color_id'). \
