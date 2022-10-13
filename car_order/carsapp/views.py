@@ -70,6 +70,11 @@ class CarMakeViewSet(viewsets.ModelViewSet):
 
 
 class OrderInfo(APIView, MyLimitOffsetPagination):
+    """
+    API для отображения списка заказв и сортировки по возрастанию количествa авто в заказе, используйте /order_info/,
+    по убыванию /order_info/{любая цифра}/. Для отображения списка заказа и сортировки по маркам авто используйте
+    order_info/{asc}/ или order_info/{desc}/
+    """
 
     def get(self, request, *args, **kwargs):
 
@@ -85,5 +90,3 @@ class OrderInfo(APIView, MyLimitOffsetPagination):
 
         serializer = OrderInfoSerializer(order_data_objects, many=True)
         return Response(serializer.data)
-
-
